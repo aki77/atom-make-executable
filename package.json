@@ -1,0 +1,20 @@
+{
+  "name": "make-executable",
+  "main": "./lib/main",
+  "version": "0.0.0",
+  "description": "Make executable",
+  "keywords": [
+    "shellscript"
+  ],
+  "repository": "https://github.com/aki77/atom-make-executable",
+  "license": "MIT",
+  "engines": {
+    "atom": ">=0.174.0 <2.0.0"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "temp": "~0.8.1",
+    "fs-plus": "~2.8.1"
+  }
+}
