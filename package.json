@@ -2,9 +2,10 @@
   "name": "make-executable",
   "main": "./lib/main",
   "version": "0.1.0",
-  "description": "Make executable",
+  "description": "Making scripts executable on save",
   "keywords": [
-    "shellscript"
+    "shellscript",
+    "shebang"
   ],
   "repository": "https://github.com/aki77/atom-make-executable",
   "license": "MIT",
