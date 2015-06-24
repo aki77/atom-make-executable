@@ -1,6 +1,7 @@
 path = require 'path'
 temp = require 'temp'
 fs = require 'fs-plus'
+helper = require '../lib/helper'
 
 describe "MakeExecutable", ->
   [activationPromise, editor, textFilePath, mainModule] = []
@@ -20,7 +21,9 @@ describe "MakeExecutable", ->
     waitsForPromise ->
       activationPromise.then((pack) ->
         {mainModule} = pack
-        spyOn(mainModule, 'makeExecutable')
+        spyOn(helper, 'makeExecutable').andCallFake( ->
+          new Promise((resolve) -> resolve())
+        )
       )
 
     waitsForPromise ->
@@ -32,12 +35,12 @@ describe "MakeExecutable", ->
     it 'no script', ->
       editor.setText('hello')
       editor.save()
-      expect(mainModule.makeExecutable).not.toHaveBeenCalled()
+      expect(helper.makeExecutable).not.toHaveBeenCalled()
 
     it 'script', ->
       editor.setText("#!/bin/sh\n\necho 'hello'")
       editor.save()
-      expect(mainModule.makeExecutable).toHaveBeenCalled()
+      expect(helper.makeExecutable).toHaveBeenCalled()
 
     it 'text file', ->
       [otherEditor] = []
@@ -49,7 +52,7 @@ describe "MakeExecutable", ->
       runs ->
         otherEditor.setText("#!/bin/sh\n\necho 'hello'")
         otherEditor.save()
-        expect(mainModule.makeExecutable).toHaveBeenCalled()
+        expect(helper.makeExecutable).toHaveBeenCalled()
 
   describe "when 'make-executable.disabledExtensions' is ['txt']", ->
     beforeEach ->
@@ -58,12 +61,12 @@ describe "MakeExecutable", ->
     it 'no script', ->
       editor.setText('hello')
       editor.save()
-      expect(mainModule.makeExecutable).not.toHaveBeenCalled()
+      expect(helper.makeExecutable).not.toHaveBeenCalled()
 
     it 'script', ->
       editor.setText("#!/bin/sh\n\necho 'hello'")
       editor.save()
-      expect(mainModule.makeExecutable).toHaveBeenCalled()
+      expect(helper.makeExecutable).toHaveBeenCalled()
 
     it 'text file', ->
       [otherEditor] = []
@@ -75,4 +78,4 @@ describe "MakeExecutable", ->
       runs ->
         otherEditor.setText("#!/bin/sh\n\necho 'hello'")
         otherEditor.save()
-        expect(mainModule.makeExecutable).not.toHaveBeenCalled()
+        expect(helper.makeExecutable).not.toHaveBeenCalled()

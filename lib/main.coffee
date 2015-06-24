@@ -1,6 +1,6 @@
 path = require 'path'
-fs = require 'fs'
 {CompositeDisposable} = require 'atom'
+helper = require './helper'
 
 module.exports =
   config:
@@ -44,10 +44,6 @@ module.exports =
     shebang = editor.getTextInBufferRange([[0, 0], [0, 2]])
     return unless shebang is '#!'
 
-    @makeExecutable(editor.getPath())
-
-  makeExecutable: (filePath) -> 
-    fs.chmod(filePath, '0755', (error) ->
-      if error
-        atom.notifications.addError('make-executable error', detail: error)
+    helper.makeExecutable(editor.getPath()).catch((error) ->
+      atom.notifications.addError('make-executable error', detail: error)
     )
