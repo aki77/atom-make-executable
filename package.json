@@ -15,6 +15,6 @@
   "dependencies": {},
   "devDependencies": {
     "temp": "~0.8.1",
-    "fs-plus": "~2.8.1"
+    "fs-plus": "~3.0.1"
   }
 }

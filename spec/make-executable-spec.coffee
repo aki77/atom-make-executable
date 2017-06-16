@@ -34,13 +34,21 @@ describe "MakeExecutable", ->
   describe "when 'make-executable.disabledExtensions' is []", ->
     it 'no script', ->
       editor.setText('hello')
-      editor.save()
-      expect(helper.makeExecutable).not.toHaveBeenCalled()
+      waitsFor (done) ->
+        editor.onDidSave( ->
+          expect(helper.makeExecutable).not.toHaveBeenCalled()
+          done()
+        )
+        editor.save()
 
     it 'script', ->
       editor.setText("#!/bin/sh\n\necho 'hello'")
-      editor.save()
-      expect(helper.makeExecutable).toHaveBeenCalled()
+      waitsFor (done) ->
+        editor.onDidSave( ->
+          expect(helper.makeExecutable).toHaveBeenCalled()
+          done()
+        )
+        editor.save()
 
     it 'text file', ->
       [otherEditor] = []
@@ -60,13 +68,21 @@ describe "MakeExecutable", ->
 
     it 'no script', ->
       editor.setText('hello')
-      editor.save()
-      expect(helper.makeExecutable).not.toHaveBeenCalled()
+      waitsFor (done) ->
+        editor.onDidSave( ->
+          expect(helper.makeExecutable).not.toHaveBeenCalled()
+          done()
+        )
+        editor.save()
 
     it 'script', ->
       editor.setText("#!/bin/sh\n\necho 'hello'")
-      editor.save()
-      expect(helper.makeExecutable).toHaveBeenCalled()
+      waitsFor (done) ->
+        editor.onDidSave( ->
+          expect(helper.makeExecutable).toHaveBeenCalled()
+          done()
+        )
+        editor.save()
 
     it 'text file', ->
       [otherEditor] = []
@@ -77,5 +93,9 @@ describe "MakeExecutable", ->
 
       runs ->
         otherEditor.setText("#!/bin/sh\n\necho 'hello'")
-        otherEditor.save()
-        expect(helper.makeExecutable).not.toHaveBeenCalled()
+        waitsFor (done) ->
+          otherEditor.onDidSave( ->
+            expect(helper.makeExecutable).not.toHaveBeenCalled()
+            done()
+          )
+          otherEditor.save()

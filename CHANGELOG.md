@@ -1,3 +1,6 @@
+## 1.0.0
+* Support for Atom 1.19 (#2)
+
 ## 0.1.1
 * Refactor
 
